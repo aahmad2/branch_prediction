@@ -1,5 +1,17 @@
 import math
 def main():
+
+    # address = int('7ff3b56ee932', 16)
+    # print(address)
+    # print("address % 32 :")
+    # print(address % 32)
+    #
+    # print()
+    # address = int('7ff3b56ee8e8', 16)
+    # print(address)
+    # print("address % 32 :")
+    # print(address % 32)
+
     # user specifies:
         # input trace file
 
@@ -18,32 +30,35 @@ def main():
 
     # open the file
     outfile = open(filename, 'r')
-    # read the file
-    #data = outfile.read()
-
-    # convert data into a string
-    #data = str(data)
 
     # number of bits: 0, 1, 2, or 3
-    num_bits = int(input("Number of bits to use: "))
+    #num_bits = int(input("Number of bits to use: "))
+    num_bits = 0
 
     # size of branch prediction buffer (assert N  to be a power of 2)
-    N = int(input("Specify size of the branch prediction buffer: "))
-    #assert N is math.pow()
+    #N = int(input("Specify size of the branch prediction buffer: "))
+    N = 32
+    # TODO: assert N is math.pow()
 
-    array = []
+    coutner = []
+    line = outfile.readline()
+    split_line = line.split()
 
     #static BP
     if (num_bits == 0):
-        for i in range (0, N):
-            array.append(0)
-            address = outfile.readline(i)
+        for i in range (1, N):
+            coutner.append(0)
+            address = int(split_line[0],16)
+            bit = int(split_line[1], 2)
 
+    elif (num_bits == 1):
+        pass
+    elif (num_bits == 2):
+        pass
+    elif (num_bits == 3):
+        pass
 
-
-
-
-
+       
 
     # tally results across all branches and report:
         # total number of branches
