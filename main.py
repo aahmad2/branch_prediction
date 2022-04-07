@@ -1,8 +1,8 @@
 import math
 def main():
 
-    # address = int('7ff3b56ee932', 16)
-    # print(address)
+    address = int('7ff3b56ee932', 16)
+    print(address)
     # print("address % 32 :")
     # print(address % 32)
     #
@@ -58,7 +58,7 @@ def main():
     elif (num_bits == 3):
         pass
 
-       
+
 
     # tally results across all branches and report:
         # total number of branches
