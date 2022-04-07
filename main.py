@@ -31,13 +31,13 @@ def main():
     N = int(input("Specify size of the branch prediction buffer: "))
     #assert N is math.pow()
 
-    array = []
+    counter = []
 
     #static BP
     if (num_bits == 0):
         for i in range (0, N):
-            array.append(0)
-            address = outfile.readline(i)
+            counter.append(0)
+
 
 
 
