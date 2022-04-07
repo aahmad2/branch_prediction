@@ -18,12 +18,12 @@ def main():
     outfile = open(filename, 'r')
 
     # number of bits: 0, 1, 2, or 3
-    #num_bits = int(input("Number of bits to use: "))
-    num_bits = 0
+    num_bits = int(input("Number of bits to use: "))
+#    num_bits = 1
 
     # size of branch prediction buffer (assert N  to be a power of 2)
     #N = int(input("Specify size of the branch prediction buffer: "))
-    N = 32
+    N = 128
     mask = N-1
     # TODO: assert N is math.pow()
 
@@ -31,11 +31,11 @@ def main():
 
     total_predictions = 0
     success = 0
-
+    for i in range (1, N):
+        counter.append(0)
     #static BP
     if (num_bits == 0):
-        for i in range (1, N):
-            counter.append(0)
+
 
         for line in outfile:
             if line != '#eof\n':
@@ -47,8 +47,26 @@ def main():
                     success +=1
         print(success/total_predictions)
 
+
+
+
     elif (num_bits == 1):
-        pass
+
+        for line in outfile:
+            if line != '#eof\n':
+                split_line = line.split()
+                address = int(split_line[0],16)
+                bit = int(split_line[1], 2)
+                total_predictions +=1
+                if counter[address%mask] == bit:
+                    success +=1
+                counter[address%mask] = bit
+        print(success, total_predictions)
+        print(success/total_predictions)
+
+
+
+
     elif (num_bits == 2):
         pass
     elif (num_bits == 3):
