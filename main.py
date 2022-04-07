@@ -1,20 +1,6 @@
 import math
 def main():
 
-    # address = int('7ff3b56ee932', 16)
-    # print(address)
-    # print("address % 32 :")
-    # print(address % 32)
-    #
-    # print()
-    # address = int('7ff3b56ee8e8', 16)
-    # print(address)
-    # print("address % 32 :")
-    # print(address % 32)
-
-    # user specifies:
-        # input trace file
-
     try:
         # have the user enter a file name
 
@@ -38,18 +24,28 @@ def main():
     # size of branch prediction buffer (assert N  to be a power of 2)
     #N = int(input("Specify size of the branch prediction buffer: "))
     N = 32
+    mask = N-1
     # TODO: assert N is math.pow()
 
-    coutner = []
-    line = outfile.readline()
-    split_line = line.split()
+    counter = []
+
+    total_predictions = 0
+    success = 0
 
     #static BP
     if (num_bits == 0):
         for i in range (1, N):
-            coutner.append(0)
-            address = int(split_line[0],16)
-            bit = int(split_line[1], 2)
+            counter.append(0)
+
+        for line in outfile:
+            if line != '#eof\n':
+                split_line = line.split()
+                address = int(split_line[0],16)
+                bit = int(split_line[1], 2)
+                total_predictions +=1
+                if counter[address%mask] == bit:
+                    success +=1
+        print(success/total_predictions)
 
     elif (num_bits == 1):
         pass
