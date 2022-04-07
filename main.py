@@ -61,6 +61,7 @@ def main():
                 if counter[address%mask] == bit:
                     success +=1
                 counter[address%mask] = bit
+        print(success, total_predictions)
         print(success/total_predictions)
 
 
