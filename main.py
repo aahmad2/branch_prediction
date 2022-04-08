@@ -131,7 +131,7 @@ def prediction(filename, num_bits, N):
         print("fails: ",'{0:.4g}%'.format(fail/total_predictions*100))
         print("success: ",'{0:.4g}%'.format(success/total_predictions*100,'%'))
     outfile.close()
-    return success, fail
+    return success
 
 
 
@@ -144,20 +144,33 @@ def main():
 
     # Define Data
 
-    team = ['Team 1','Team 2','Team 3','Team 4','Team 5']
-    female = [5, 10, 15, 20, 25]
-    male = [15, 20, 30, 16, 13]
+    BP_used = ['Static BP','1-bit BP','2-bit BP','3-bit BP']
+    successes32bit = []
+    successes128bit = []
 
-    x_axis = np.arange(len(team))
+
+    successes32bit.append(prediction("gcc.trace.out",0,32))
+    successes32bit.append(prediction("gcc.trace.out",1,32))
+    successes32bit.append(prediction("gcc.trace.out",2,32))
+    successes32bit.append(prediction("gcc.trace.out",3,32))
+
+
+    successes128bit.append(prediction("gcc.trace.out",0,128))
+    successes128bit.append(prediction("gcc.trace.out",1,128))
+    successes128bit.append(prediction("gcc.trace.out",2,128))
+    successes128bit.append(prediction("gcc.trace.out",3,128))
+
+
+    x_axis = np.arange(len(BP_used))
 
     # Multi bar Chart
 
-    plt.bar(x_axis -0.2, female, width=0.4, label = 'Female')
-    plt.bar(x_axis +0.2, male, width=0.4, label = 'Male')
+    plt.bar(x_axis -0.2, successes32bit, width=0.4, label = 'N=32')
+    plt.bar(x_axis +0.2, successes128bit, width=0.4, label = 'N=128')
 
     # Xticks
 
-    plt.xticks(x_axis, team)
+    plt.xticks(x_axis, BP_used)
 
     # Add legend
 
@@ -166,39 +179,7 @@ def main():
     # Display
 
     plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
     while True:
         try:
             # have the user enter a file name
