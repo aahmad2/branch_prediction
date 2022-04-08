@@ -83,7 +83,6 @@ def main():
                     #counter[address % mask] = max(counter[address % mask] - 1, 0)
 
                 if bit == 1:
-
                     counter[address % mask] = min(counter[address % mask] + 1, 3)
                 else:
                     counter[address % mask] = max(counter[address % mask] - 1, 0)
@@ -92,8 +91,38 @@ def main():
 
         print(success, total_predictions)
         print(success/total_predictions)
+
+
+
+
+
     elif (num_bits == 3):
-        pass
+        for line in outfile:
+            if line != '#eof\n':
+                split_line = line.split()
+                address = int(split_line[0],16)
+                bit = int(split_line[1], 2)
+                total_predictions +=1
+                if counter[address % mask] == 4 or counter[address % mask] == 5 or counter[address % mask] == 6 or counter[address % mask] == 7:
+                    prediction = 1
+                    #success +=1
+                    #counter[address % mask] = min(counter[address % mask] + 1, 3)
+                else:
+                    prediction = 0
+                    #counter[address % mask] = max(counter[address % mask] - 1, 0)
+
+                if bit == 1:
+                    counter[address % mask] = min(counter[address % mask] + 1, 7)
+                else:
+                    counter[address % mask] = max(counter[address % mask] - 1, 0)
+                if prediction == bit:
+                    success +=1
+
+        print(success, total_predictions)
+        print(success/total_predictions)
+
+
+
 
 
     # tally results across all branches and report:
