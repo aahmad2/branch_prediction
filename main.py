@@ -1,48 +1,10 @@
-def main():
-
-    while True:
-        try:
-            # have the user enter a file name
-            filename = input("Please enter a filename: ")
-
-            # open the file
-            outfile = open(filename, 'r')
-            break
-
-        except IOError:
-            # prints invalid file if the file does not exist for reading
-            print("Invalid filename. Please try again.")
-            filename = input("Enter a filename: ")
+import numpy as np
+import matplotlib.pyplot as plt
 
 
-
-    # input error handling for number of bits
-    while True:
-        try:
-            # number of bits: 0, 1, 2, or 3
-            num_bits = int(input("Number of bits to use: "))
-
-            if num_bits < 0 or num_bits > 3:
-                raise ValueError
-            break
-
-        except ValueError:
-            print("This is not a valid number. Please insert a number 0-3")
-
-
-    # input error handling for size of N
-    while True:
-        try:
-            # The value of N must be a power of 2
-            N = int(input("Specify size of the branch prediction buffer: "))
-            assert (N & (N - 1) == 0) and N != 0,AssertionError
-            break
-        except AssertionError:
-            print("Size must be power of 2")
-        except ValueError:
-            print("Must enter a value.")
-
-
+def prediction(filename, num_bits, N):
+    # open the file
+    outfile = open(filename, 'r')
     mask = N
     counter = []
 
@@ -168,7 +130,8 @@ def main():
         print("total number of branches:", total_predictions)
         print("fails: ",'{0:.4g}%'.format(fail/total_predictions*100))
         print("success: ",'{0:.4g}%'.format(success/total_predictions*100,'%'))
-
+    outfile.close()
+    return success, fail
 
 
 
@@ -176,7 +139,107 @@ def main():
 
 
     # close the file
-    outfile.close()
 
+def main():
+
+    # Define Data
+
+    team = ['Team 1','Team 2','Team 3','Team 4','Team 5']
+    female = [5, 10, 15, 20, 25]
+    male = [15, 20, 30, 16, 13]
+
+    x_axis = np.arange(len(team))
+
+    # Multi bar Chart
+
+    plt.bar(x_axis -0.2, female, width=0.4, label = 'Female')
+    plt.bar(x_axis +0.2, male, width=0.4, label = 'Male')
+
+    # Xticks
+
+    plt.xticks(x_axis, team)
+
+    # Add legend
+
+    plt.legend()
+
+    # Display
+
+    plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    while True:
+        try:
+            # have the user enter a file name
+            filename = input("Please enter a filename: ")
+
+
+            break
+
+        except IOError:
+            # prints invalid file if the file does not exist for reading
+            print("Invalid filename. Please try again.")
+            filename = input("Enter a filename: ")
+
+
+
+        # input error handling for number of bits
+    while True:
+        try:
+            # number of bits: 0, 1, 2, or 3
+            num_bits = int(input("Number of bits to use: "))
+
+            if num_bits < 0 or num_bits > 3:
+                raise ValueError
+            break
+
+        except ValueError:
+            print("This is not a valid number. Please insert a number 0-3")
+
+
+        # input error handling for size of N
+    while True:
+        try:
+            # The value of N must be a power of 2
+            N = int(input("Specify size of the branch prediction buffer: "))
+            assert (N & (N - 1) == 0) and N != 0,AssertionError
+            break
+        except AssertionError:
+            print("Size must be power of 2")
+        except ValueError:
+            print("Must enter a value.")
+
+    prediction(filename,num_bits,N)
 
 main()
