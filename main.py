@@ -77,9 +77,15 @@ def main():
                 if counter[address % mask] == 2 or counter[address % mask] == 3:
                     prediction = 1
                     #success +=1
-                    counter[address % mask] = min(counter[address % mask] + 1, 3)
+                    #counter[address % mask] = min(counter[address % mask] + 1, 3)
                 else:
                     prediction = 0
+                    #counter[address % mask] = max(counter[address % mask] - 1, 0)
+
+                if bit == 1:
+
+                    counter[address % mask] = min(counter[address % mask] + 1, 3)
+                else:
                     counter[address % mask] = max(counter[address % mask] - 1, 0)
                 if prediction == bit:
                     success +=1
