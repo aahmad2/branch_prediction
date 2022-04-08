@@ -54,15 +54,29 @@ def main():
                 if counter[address%mask] == bit:
                     success +=1
                 counter[address%mask] = bit
+                if counter[address % mask] == 2:
+                    print(counter[address % mask])
         print(success, total_predictions)
         print(success/total_predictions)
 
     elif (num_bits == 2):
-        pass
+        
+        for line in outfile:
+            if line != '#eof\n':
+                split_line = line.split()
+                address = int(split_line[0],16)
+                bit = int(split_line[1], 2)
+                total_predictions +=1
+                if counter[address % mask] == 2 | counter[address % mask] == 3:
+                    success +=1
+                    counter[address % mask] = min(counter[address % mask] + 1, 3)
+                else:
+                    counter[address % mask] = max(counter[address % mask] - 1, 0)
+        print(success, total_predictions)
+        print(success/total_predictions)
     elif (num_bits == 3):
         pass
 
-       
 
     # tally results across all branches and report:
         # total number of branches
