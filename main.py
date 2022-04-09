@@ -1,3 +1,5 @@
+#This project was made by Areeb Ahmad and Sydney Hildreth.
+#Citations for graph related code: https://pythonguides.com/matplotlib-multiple-bar-chart/
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -40,7 +42,6 @@ def prediction(filename, num_bits, N):
         print("success: ",'{0:.4g}%'.format(success/total_predictions * 100))
 
     elif (num_bits == 1):
-
         for line in outfile:
             if line != '#eof\n':
 
@@ -143,73 +144,59 @@ def make_graph(filename, N1, N2):
     successesN2bit = []
 
 
-
+    #stores values for the runs for test runs with size N1
     successesN1bit.append(prediction(filename, 0, N1))
     successesN1bit.append(prediction(filename, 1, N1))
     successesN1bit.append(prediction(filename, 2, N1))
     successesN1bit.append(prediction(filename, 3, N1))
 
+    #stores values for the runs for test runs with size N1
     successesN2bit.append(prediction(filename, 0, N2))
     successesN2bit.append(prediction(filename, 1, N2))
     successesN2bit.append(prediction(filename, 2, N2))
     successesN2bit.append(prediction(filename, 3, N2))
 
-    x_axis = np.arange(len(BP_used))
-
     # Multi bar Chart
+    x_axis = np.arange(len(BP_used))
     plt.ylim(0, 100)
-
     plt.bar(x_axis - 0.2, successesN1bit, width=0.4, label=f'N={N1}')
     plt.bar(x_axis + 0.2, successesN2bit, width=0.4, label=f'N={N2}')
-
-    # Xticks
-
     plt.xticks(x_axis, BP_used)
-
     # Add legend
     plt.title(f"{filename}'s Success Percentages for N={N1} and N={N2}")
-
     plt.legend()
-
-    # Display
 
     plt.show()
 
 def main():
+#This section prints all the graphs. COMMENT THESE OUT FOR TESTING THE USER INPUT SECTION
 
     #make_graph("gcc.trace.out", 32, 128)
     #make_graph("curl.trace.out", 32, 128)
     #make_graph("cholesky64.trace.out", 32, 128)
     #make_graph("cs201dynalloc.trace.out", 32, 128)
 
+#This section handles all the user inputs
 
-    
+    # have the user enter a file name
     while True:
         try:
-            # have the user enter a file name
             filename = input("Please enter a filename: ")
-
             outfile = open(filename, 'r')
             outfile.close()
             break
-
         except IOError:
             # prints invalid file if the file does not exist for reading
             print("Invalid filename. Please try again.")
-            
 
-
-
-        # input error handling for number of bits
+    # input error handling for number of bits
     while True:
         try:
             # number of bits: 0, 1, 2, or 3
             num_bits = int(input("Number of bits to use: "))
-
             if num_bits < 0 or num_bits > 3:
                 raise ValueError
             break
-
         except ValueError:
             print("This is not a valid number. Please insert a number 0-3")
 
@@ -221,6 +208,7 @@ def main():
             N = int(input("Specify size of the branch prediction buffer: "))
             assert (N & (N - 1) == 0) and N != 0,AssertionError
             break
+        # Handles cases for empty or inputs that are not a power of two
         except AssertionError:
             print("Size must be power of 2")
         except ValueError:
