@@ -131,61 +131,66 @@ def prediction(filename, num_bits, N):
         print("fails: ",'{0:.4g}%'.format(fail/total_predictions*100))
         print("success: ",'{0:.4g}%'.format(success/total_predictions*100,'%'))
     outfile.close()
-    return success
-
-
-
-
-
+    return success/total_predictions*100
 
     # close the file
 
-def main():
-
+def make_graph(filename, N1, N2):
     # Define Data
 
-    BP_used = ['Static BP','1-bit BP','2-bit BP','3-bit BP']
+    BP_used = ['Static BP', '1-bit BP', '2-bit BP', '3-bit BP']
     successes32bit = []
     successes128bit = []
 
 
-    successes32bit.append(prediction("gcc.trace.out",0,32))
-    successes32bit.append(prediction("gcc.trace.out",1,32))
-    successes32bit.append(prediction("gcc.trace.out",2,32))
-    successes32bit.append(prediction("gcc.trace.out",3,32))
 
+    successes32bit.append(prediction(filename, 0, N1))
+    successes32bit.append(prediction(filename, 1, N1))
+    successes32bit.append(prediction(filename, 2, N1))
+    successes32bit.append(prediction(filename, 3, N1))
 
-    successes128bit.append(prediction("gcc.trace.out",0,128))
-    successes128bit.append(prediction("gcc.trace.out",1,128))
-    successes128bit.append(prediction("gcc.trace.out",2,128))
-    successes128bit.append(prediction("gcc.trace.out",3,128))
-
+    successes128bit.append(prediction(filename, 0, N2))
+    successes128bit.append(prediction(filename, 1, N2))
+    successes128bit.append(prediction(filename, 2, N2))
+    successes128bit.append(prediction(filename, 3, N2))
 
     x_axis = np.arange(len(BP_used))
 
     # Multi bar Chart
+    plt.ylim(0, 100)
 
-    plt.bar(x_axis -0.2, successes32bit, width=0.4, label = 'N=32')
-    plt.bar(x_axis +0.2, successes128bit, width=0.4, label = 'N=128')
+    plt.bar(x_axis - 0.2, successes32bit, width=0.4, label=f'N={N1}')
+    plt.bar(x_axis + 0.2, successes128bit, width=0.4, label=f'N={N2}')
 
     # Xticks
 
     plt.xticks(x_axis, BP_used)
 
     # Add legend
+    plt.title(f"{filename}'s Success Percentages for N={N1} and N={N2}")
 
     plt.legend()
 
     # Display
 
     plt.show()
+
+def main():
+
+    make_graph("gcc.trace.out", 32, 128)
+    make_graph("curl.trace.out", 32, 128)
+    make_graph("cholesky64.trace.out", 32, 128)
+    make_graph("cs201dynalloc.trace.out", 32, 128)
+
+
     
     while True:
         try:
             # have the user enter a file name
             filename = input("Please enter a filename: ")
 
-
+            outfile = open(filename, 'r')
+            outfile.close()
             break
 
         except IOError:
@@ -209,7 +214,7 @@ def main():
             print("This is not a valid number. Please insert a number 0-3")
 
 
-        # input error handling for size of N
+    # input error handling for size of N
     while True:
         try:
             # The value of N must be a power of 2
