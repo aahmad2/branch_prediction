@@ -177,10 +177,10 @@ def make_graph(filename, N1, N2):
 
 def main():
 
-    make_graph("gcc.trace.out", 32, 128)
-    make_graph("curl.trace.out", 32, 128)
-    make_graph("cholesky64.trace.out", 32, 128)
-    make_graph("cs201dynalloc.trace.out", 32, 128)
+    #make_graph("gcc.trace.out", 32, 128)
+    #make_graph("curl.trace.out", 32, 128)
+    #make_graph("cholesky64.trace.out", 32, 128)
+    #make_graph("cs201dynalloc.trace.out", 32, 128)
 
 
     
@@ -196,7 +196,7 @@ def main():
         except IOError:
             # prints invalid file if the file does not exist for reading
             print("Invalid filename. Please try again.")
-            filename = input("Enter a filename: ")
+            
 
 
 
