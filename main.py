@@ -131,7 +131,7 @@ def prediction(filename, num_bits, N):
         print("fails: ",'{0:.4g}%'.format(fail/total_predictions*100))
         print("success: ",'{0:.4g}%'.format(success/total_predictions*100,'%'))
     outfile.close()
-    return success
+    return (success/total_predictions) * 100
 
 
 
@@ -179,7 +179,7 @@ def main():
     # Display
 
     plt.show()
-    
+
     while True:
         try:
             # have the user enter a file name
