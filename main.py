@@ -139,28 +139,28 @@ def make_graph(filename, N1, N2):
     # Define Data
 
     BP_used = ['Static BP', '1-bit BP', '2-bit BP', '3-bit BP']
-    successes32bit = []
-    successes128bit = []
+    successesN1bit = []
+    successesN2bit = []
 
 
 
-    successes32bit.append(prediction(filename, 0, N1))
-    successes32bit.append(prediction(filename, 1, N1))
-    successes32bit.append(prediction(filename, 2, N1))
-    successes32bit.append(prediction(filename, 3, N1))
+    successesN1bit.append(prediction(filename, 0, N1))
+    successesN1bit.append(prediction(filename, 1, N1))
+    successesN1bit.append(prediction(filename, 2, N1))
+    successesN1bit.append(prediction(filename, 3, N1))
 
-    successes128bit.append(prediction(filename, 0, N2))
-    successes128bit.append(prediction(filename, 1, N2))
-    successes128bit.append(prediction(filename, 2, N2))
-    successes128bit.append(prediction(filename, 3, N2))
+    successesN2bit.append(prediction(filename, 0, N2))
+    successesN2bit.append(prediction(filename, 1, N2))
+    successesN2bit.append(prediction(filename, 2, N2))
+    successesN2bit.append(prediction(filename, 3, N2))
 
     x_axis = np.arange(len(BP_used))
 
     # Multi bar Chart
     plt.ylim(0, 100)
 
-    plt.bar(x_axis - 0.2, successes32bit, width=0.4, label=f'N={N1}')
-    plt.bar(x_axis + 0.2, successes128bit, width=0.4, label=f'N={N2}')
+    plt.bar(x_axis - 0.2, successesN1bit, width=0.4, label=f'N={N1}')
+    plt.bar(x_axis + 0.2, successesN2bit, width=0.4, label=f'N={N2}')
 
     # Xticks
 
