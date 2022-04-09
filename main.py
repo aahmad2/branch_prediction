@@ -171,10 +171,10 @@ def make_graph(filename, N1, N2):
 def main():
 # This section prints all the graphs. COMMENT THESE OUT FOR TESTING THE USER INPUT SECTION
 
-    #make_graph("gcc.trace.out", 32, 128)
-    #make_graph("curl.trace.out", 32, 128)
-    #make_graph("cholesky64.trace.out", 32, 128)
-    #make_graph("cs201dynalloc.trace.out", 32, 128)
+    make_graph("gcc.trace.out", 32, 128)
+    make_graph("curl.trace.out", 32, 128)
+    make_graph("cholesky64.trace.out", 32, 128)
+    make_graph("cs201dynalloc.trace.out", 32, 128)
 
 # This section handles all the user inputs
 
