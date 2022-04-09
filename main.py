@@ -67,10 +67,12 @@ def prediction(filename, num_bits, N):
     elif (num_bits == 1):
         for line in outfile:
             if line != '#eof\n':
+
                 split_line = line.split()
                 address = int(split_line[0], 16)
                 bit = int(split_line[1], 2)
                 total_predictions += 1
+
                 if counter[address % mask] == bit:
                     success += 1
                 else:
@@ -82,12 +84,15 @@ def prediction(filename, num_bits, N):
 
     # Two-bit BP for when num_bits = 2
     elif (num_bits == 2):
+
         for line in outfile:
             if line != '#eof\n':
+
                 split_line = line.split()
                 address = int(split_line[0], 16)
                 bit = int(split_line[1], 2)
                 total_predictions += 1
+
                 # since we can have two possible outcomes and the counter
                 # can store 4 different values, we use a prediction variable
                 # to interpret the counter values.
@@ -95,26 +100,32 @@ def prediction(filename, num_bits, N):
                     prediction = 1
                 else:
                     prediction = 0
+
                 if bit == 1:
                     counter[address % mask] = min(counter[address % mask] + 1, 3)
                 else:
                     counter[address % mask] = max(counter[address % mask] - 1, 0)
+
                 if prediction == bit:
-                    success +=1
+                    success += 1
                 else:
-                    fail +=1
+                    fail += 1
+
         print("total number of branches:", total_predictions)
         print("fails: ", '{0:.4g}%'.format(fail/total_predictions*100))
         print("success: ",'{0:.4g}%'.format(success/total_predictions*100))
 
     # Three-bit BP for when num_bits = 3
     elif (num_bits == 3):
+
         for line in outfile:
             if line != '#eof\n':
+
                 split_line = line.split()
                 address = int(split_line[0], 16)
                 bit = int(split_line[1], 2)
                 total_predictions +=1
+
                 # Works the same as 2 bit but with
                 # different possible values for counter.
                 if counter[address % mask] == 4 or counter[address % mask] == 5 or counter[address % mask] == 6 or \
@@ -122,6 +133,7 @@ def prediction(filename, num_bits, N):
                     prediction = 1
                 else:
                     prediction = 0
+
                 if bit == 1:
                     counter[address % mask] = min(counter[address % mask] + 1, 7)
                 else:
@@ -131,11 +143,18 @@ def prediction(filename, num_bits, N):
                     success += 1
                 else:
                     fail += 1
+
         print("total number of branches:", total_predictions)
         print("fails: ",'{0:.4g}%'.format(fail/total_predictions*100))
         print("success: ",'{0:.4g}%'.format(success/total_predictions*100,'%'))
+
+     # close the file
     outfile.close()
+
+    # return percentage of successes
     return success/total_predictions*100
+
+# method that makes a graph comparing two different size buffers
 def make_graph(filename, N1, N2):
     # Define Data
 
@@ -169,8 +188,9 @@ def make_graph(filename, N1, N2):
     plt.show()
 
 def main():
-# This section prints all the graphs. COMMENT THESE OUT FOR TESTING THE USER INPUT SECTION
 
+    # This section prints all the graphs. COMMENT THESE OUT FOR TESTING THE USER INPUT SECTION
+    # As the size of the buffer gets larger, the predictions are more successful
     make_graph("gcc.trace.out", 32, 128)
     make_graph("curl.trace.out", 32, 128)
     make_graph("cholesky64.trace.out", 32, 128)
