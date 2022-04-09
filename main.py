@@ -1,32 +1,54 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
+# method prediction that takes in the user input of the filename, # of bits, and size of buffer
 def prediction(filename, num_bits, N):
+
     # open the file
     outfile = open(filename, 'r')
     mask = N
+
+    # create array for predictions
     counter = []
 
+    # counter for total number of predictions
     total_predictions = 0
+
+    # counter for total number of successes
     success = 0
+
+    # counter for total number of fails
     fail = 0
 
+    # set all initial predictions to 0
     for i in range (0, N):
         counter.append(0)
 
-    #static BP
+    # static BP for when num_bits = 0
     if (num_bits == 0):
 
+        # go through each line of the file
         for line in outfile:
+            # goes until it reaches the end of the file
             if line != '#eof\n':
 
+                # make each line into a list of strings
                 split_line = line.split()
+
+                # gets hexadecimal value from the list and convert to an integer
                 address = int(split_line[0], 16)
+
+                # get the prediction bit and convert it to an integer
                 bit = int(split_line[1], 2)
+
+                # for each line increment total_predictions by one
                 total_predictions += 1
 
+                # form index into branch history table by taking address % N
+                # increment success when counter[address % mask] and bit = 0,
+                # increment fail otherwise
                 if counter[address % mask] == bit:
+
                     success += 1
                 else:
                     fail += 1
@@ -196,7 +218,7 @@ def main():
         except IOError:
             # prints invalid file if the file does not exist for reading
             print("Invalid filename. Please try again.")
-            
+
 
 
 
