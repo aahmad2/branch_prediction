@@ -63,31 +63,24 @@ def prediction(filename, num_bits, N):
         print("fails: ", '{0:.4g}%'.format(fail/total_predictions * 100))
         print("success: ",'{0:.4g}%'.format(success/total_predictions * 100))
 
+    # One-bit BP for when num_bits = 1
     elif (num_bits == 1):
         for line in outfile:
             if line != '#eof\n':
-
                 split_line = line.split()
                 address = int(split_line[0], 16)
                 bit = int(split_line[1], 2)
                 total_predictions += 1
-
                 if counter[address % mask] == bit:
                     success += 1
                 else:
                     fail += 1
-
                 counter[address % mask] = bit
-
-
-        # tally results across all branches and report:
-            # total number of branches
-            # percentage of correct predictions
-            # percentage of incorrect predictions
         print("total number of branches:", total_predictions)
         print("fails: ", '{0:.4g}%'.format(fail/total_predictions * 100))
         print("success: ", '{0:.4g}%'.format(success/total_predictions * 100))
 
+    # Two-bit BP for when num_bits = 2
     elif (num_bits == 2):
         for line in outfile:
             if line != '#eof\n':
@@ -114,6 +107,7 @@ def prediction(filename, num_bits, N):
         print("fails: ", '{0:.4g}%'.format(fail/total_predictions*100))
         print("success: ",'{0:.4g}%'.format(success/total_predictions*100))
 
+    # Three-bit BP for when num_bits = 3
     elif (num_bits == 3):
         for line in outfile:
             if line != '#eof\n':
@@ -121,6 +115,8 @@ def prediction(filename, num_bits, N):
                 address = int(split_line[0], 16)
                 bit = int(split_line[1], 2)
                 total_predictions +=1
+                # Works the same as 2 bit but with
+                # different possible values for counter.
                 if counter[address % mask] == 4 or counter[address % mask] == 5 or counter[address % mask] == 6 or \
                         counter[address % mask] == 7:
                     prediction = 1
@@ -140,9 +136,6 @@ def prediction(filename, num_bits, N):
         print("success: ",'{0:.4g}%'.format(success/total_predictions*100,'%'))
     outfile.close()
     return success/total_predictions*100
-
-    # close the file
-
 def make_graph(filename, N1, N2):
     # Define Data
 
@@ -151,13 +144,13 @@ def make_graph(filename, N1, N2):
     successesN2bit = []
 
 
-    #stores values for the runs for test runs with size N1
+    # stores values for the runs for test runs with size N1
     successesN1bit.append(prediction(filename, 0, N1))
     successesN1bit.append(prediction(filename, 1, N1))
     successesN1bit.append(prediction(filename, 2, N1))
     successesN1bit.append(prediction(filename, 3, N1))
 
-    #stores values for the runs for test runs with size N1
+    # stores values for the runs for test runs with size N1
     successesN2bit.append(prediction(filename, 0, N2))
     successesN2bit.append(prediction(filename, 1, N2))
     successesN2bit.append(prediction(filename, 2, N2))
@@ -176,14 +169,14 @@ def make_graph(filename, N1, N2):
     plt.show()
 
 def main():
-#This section prints all the graphs. COMMENT THESE OUT FOR TESTING THE USER INPUT SECTION
+# This section prints all the graphs. COMMENT THESE OUT FOR TESTING THE USER INPUT SECTION
 
     #make_graph("gcc.trace.out", 32, 128)
     #make_graph("curl.trace.out", 32, 128)
     #make_graph("cholesky64.trace.out", 32, 128)
     #make_graph("cs201dynalloc.trace.out", 32, 128)
 
-#This section handles all the user inputs
+# This section handles all the user inputs
 
     # have the user enter a file name
     while True:
